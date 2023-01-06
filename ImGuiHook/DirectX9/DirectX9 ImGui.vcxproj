@@ -35,6 +35,8 @@
     <ClInclude Include="..\Directories\MinHook\Src\hde\table64.h" />
     <ClInclude Include="..\Directories\MinHook\Src\trampoline.h" />
     <ClInclude Include="..\Directories\Menu\Menu.h" />
+    <ClInclude Include="..\Directories\Menu\imfilebrowser.h" />
+    <ClInclude Include="..\Directories\Menu\TextEditor.h" />
     <ClInclude Include="..\Global.h" />
     <ClInclude Include="DirectX9.h" />
     <ClInclude Include="DirectX9ImGui.h" />
@@ -53,6 +55,7 @@
     <ClCompile Include="..\Directories\MinHook\Src\hook.c" />
     <ClCompile Include="..\Directories\MinHook\Src\trampoline.c" />
     <ClCompile Include="..\Directories\Menu\Menu.cpp" />
+    <ClCompile Include="..\Directories\Menu\TextEditor.cpp" />
     <ClCompile Include="DirectX9ImGui.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
