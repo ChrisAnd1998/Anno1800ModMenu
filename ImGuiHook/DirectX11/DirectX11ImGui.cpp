@@ -5,8 +5,10 @@
 #include "../Directories/ImGui/imgui_impl_dx11.h"
 #include "../Directories/ImGui/imgui_impl_win32.h"
 #include "../Directories/Menu/Menu.h"
+#include "../Directories/Menu/TextEditor.h"
 
 Menu menu = Menu();
+
 bool ShowMenu = true;
 bool ImGui_Initialised = false;
 

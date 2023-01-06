@@ -68,6 +68,7 @@
     </ClInclude>
     <ClInclude Include="DirectX11ImGui.h" />
     <ClInclude Include="..\Directories\Menu\Menu.h" />
+    <ClInclude Include="..\Directories\Menu\TextEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Directories\MinHook\Src\buffer.c">
@@ -108,5 +109,6 @@
     </ClCompile>
     <ClCompile Include="DirectX11ImGui.cpp" />
     <ClCompile Include="..\Directories\Menu\Menu.cpp" />
+    <ClCompile Include="..\Directories\Menu\TextEditor.cpp" />
   </ItemGroup>
 </Project>
