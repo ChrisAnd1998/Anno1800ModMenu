@@ -48,7 +48,8 @@ void LoadOriginalLibrary()
 
 void LoadPlugins()
 {
-    LoadLibrary("Anno1800ModMenu.dll");
+        LoadLibrary("Anno1800ModMenuDX11.dll");
+        LoadLibrary("Anno1800ModMenuDX12.dll");
 }
 
 void LoadEverything()

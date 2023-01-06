@@ -42,7 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\x64\Release\</OutDir>
+    <OutDir>$(SolutionDir)Build\</OutDir>
     <IntDir>obj\Release\</IntDir>
     <TargetName>d3d11</TargetName>
     <TargetExt>.dll</TargetExt>
