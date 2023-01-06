@@ -1,7 +1,9 @@
 # Anno1800ModMenu
 A mod menu for Anno 1800 based on Dear ImGui. You can show/hide the menu with F8.
 
-![Anno 18002023-1-6-8-52-26](https://user-images.githubusercontent.com/50437199/210955676-82166d21-b4f5-4e98-ab5d-5bd05e2d56ac.jpg)
+
+![Screenshot 2023-01-06 162818](https://user-images.githubusercontent.com/50437199/211046155-be8269ec-820a-418a-8d0b-5cf994484c90.png)
+![Screenshot 2023-01-06 162905](https://user-images.githubusercontent.com/50437199/211046187-76f9d6c5-25ac-41aa-8b10-3ce1375b77fe.png)
 
 
 # Installation
