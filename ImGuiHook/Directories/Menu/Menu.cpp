@@ -1,6 +1,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <sstream> //std::stringstream
 #include <direct.h>
 #include <wtypes.h>
 #include <vector>
@@ -33,19 +34,24 @@ ImGui::FileBrowser fileDialog;
 
 bool savefile = false;
 
+static const char* fileToEdit;
+
 std::string currentFile = "";
 
-static const char* fileToEdit = "";
-
 void fileEdit(std::string file) {
-	 fileToEdit = (char*)file.c_str();
+	fileToEdit = NULL;
+	fileToEdit = (char*)file.c_str();
+	//currentFile = file;
+
 	//	static const char* fileToEdit = "test.cpp";
-		std::ifstream t(fileToEdit);
-		if (t.good())
-		{
-			std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
-			editor.SetText(str);
-		}
+		std::ifstream inFile;
+		inFile.open(fileToEdit); //open the input file
+
+		std::stringstream strStream;
+		strStream << inFile.rdbuf(); //read the file
+		std::string str = strStream.str(); //str holds the content of the file
+
+		editor.SetText(str);
 }
 
 std::string curDir(std::string file)
@@ -205,7 +211,7 @@ void Menu::Render(bool* p_open)
 	ImGui::SetNextWindowSize(ImVec2(600, 800), ImGuiCond_FirstUseEver);
 
 	// Main body of the Demo window starts here.
-	if (!ImGui::Begin("Anno 1800 Mod Menu v1.2", p_open, window_flags))
+	if (!ImGui::Begin("Anno 1800 Mod Menu v1.3", p_open, window_flags))
 	{
 		// Early out if the window is collapsed, as an optimization.
 		ImGui::End();
@@ -328,7 +334,7 @@ void Menu::Render(bool* p_open)
 
 		ImGui::Text(" ");
 		ImGui::Text("By ChrisAnd1998");
-		ImGui::Text("NOTE: Show/Hide this menu with F8 key.");
+		ImGui::Text("NOTE: Show/Hide this menu with F7 key.");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 		isWindowHovered = ImGui::IsWindowHovered(0);
@@ -393,25 +399,67 @@ void Menu::Render(bool* p_open)
 					ImGui::EndMenu();
 				}
 
-				if (ImGui::BeginMenu("View"))
+				if (ImGui::BeginMenu("Palette"))
 				{
 					if (ImGui::MenuItem("Dark palette"))
 						editor.SetPalette(TextEditor::GetDarkPalette());
+					if (ImGui::MenuItem("Dark palette"))
+						editor.SetPalette(TextEditor::GetMarianaPalette());
 					if (ImGui::MenuItem("Light palette"))
 						editor.SetPalette(TextEditor::GetLightPalette());
 					if (ImGui::MenuItem("Retro blue palette"))
 						editor.SetPalette(TextEditor::GetRetroBluePalette());
 					ImGui::EndMenu();
 				}
+
+				if (ImGui::BeginMenu("Language"))
+				{
+					//if (ImGui::MenuItem("XML"))
+						//editor.SetLanguageDefinition(TextEditor::LanguageDefinition::XML());
+					if (ImGui::MenuItem("C++"))
+						editor.SetLanguageDefinition(TextEditor::LanguageDefinition::CPlusPlus());
+					if (ImGui::MenuItem("HLSL"))
+						editor.SetLanguageDefinition(TextEditor::LanguageDefinition::HLSL());
+					if (ImGui::MenuItem("GLSL"))
+						editor.SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
+					if (ImGui::MenuItem("Python"))
+						editor.SetLanguageDefinition(TextEditor::LanguageDefinition::Python());
+					if (ImGui::MenuItem("C"))
+						editor.SetLanguageDefinition(TextEditor::LanguageDefinition::C());
+					if (ImGui::MenuItem("SQL"))
+						editor.SetLanguageDefinition(TextEditor::LanguageDefinition::SQL());
+					if (ImGui::MenuItem("Angel Script"))
+						editor.SetLanguageDefinition(TextEditor::LanguageDefinition::AngelScript());
+					if (ImGui::MenuItem("Lua"))
+						editor.SetLanguageDefinition(TextEditor::LanguageDefinition::Lua());
+					ImGui::EndMenu();
+
+
+					
+
+
+				}
+
 				ImGui::EndMenuBar();
 			}
 
-			ImGui::Text("%6d/%-6d %6d lines",  NULL,  NULL, editor.GetTotalLines(),
-				editor.IsOverwrite() ? "Ovr" : "Ins",
-				editor.CanUndo() ? "*" : " ",
-				editor.GetLanguageDefinition().mName.c_str(), fileToEdit);
+
+			if (currentFile == "") {
+				ImGui::Text("No file selected. [File] -> [Open]");
+			}
+			else {
+				ImGui::Text(currentFile.c_str());
+			}
+
+			//ImGui::Text(currentFile.c_str());
+
+			//editor.GetLanguageDefinitionName();
+			
 
 			editor.Render("TextEditor");
+
+			
+
 			ImGui::End();
 
 			
@@ -426,8 +474,11 @@ void Menu::Render(bool* p_open)
 
 		if (fileDialog.HasSelected())
 		{
-			fileEdit(fileDialog.GetSelected().string());
+			//MessageBox(NULL, fileDialog.GetSelected().string().c_str(), "", MB_OK);
+			//fileEdit(fileDialog.GetSelected().string());	
 			currentFile = fileDialog.GetSelected().string();
+			fileEdit(currentFile);
+			editor.SetLanguageDefinition(TextEditor::LanguageDefinition::CPlusPlus());
 			fileDialog.ClearSelected();
 		}
 	

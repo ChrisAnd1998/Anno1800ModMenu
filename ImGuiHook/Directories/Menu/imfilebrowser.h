@@ -583,7 +583,7 @@ inline void ImGui::FileBrowser::Display()
                 }
             }
 
-            if(IsItemClicked(0) && IsMouseDoubleClicked(0))
+            if(IsItemClicked(0))
             {
                 if(rsc.isDir)
                 {
