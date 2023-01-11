@@ -31,6 +31,8 @@ namespace DirectX11Interface {
 	ID3D11RenderTargetView* RenderTargetView;
 }
 
+bool resizeWindow;
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT APIENTRY WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	if (ShowMenu) {
@@ -42,6 +44,11 @@ LRESULT APIENTRY WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			return true;
 		}
 	}
+
+	if (uMsg == WM_SIZE) {
+		resizeWindow = true;
+	}
+
 	return CallWindowProc(Process::WndProc, hwnd, uMsg, wParam, lParam);
 }
 
@@ -73,7 +80,21 @@ HRESULT APIENTRY MJPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT F
 			ImGui_Initialised = true;
 		}
 	}
-	if (GetAsyncKeyState(VK_F8) & 1) ShowMenu = !ShowMenu;
+
+	if (resizeWindow) {
+		ID3D11Texture2D* BackBuffer;
+		pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&BackBuffer);
+		DirectX11Interface::Device->CreateRenderTargetView(BackBuffer, NULL, &DirectX11Interface::RenderTargetView);
+		BackBuffer->Release();
+
+		ImGui_ImplWin32_Init(WindowHwnd);
+		ImGui_ImplDX11_Init(DirectX11Interface::Device, DirectX11Interface::DeviceContext);
+		ImGui_ImplDX11_CreateDeviceObjects();
+
+		resizeWindow = false;
+	}
+
+	if (GetAsyncKeyState(VK_F7) & 1) ShowMenu = !ShowMenu;
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
@@ -94,9 +115,9 @@ void APIENTRY MJDrawIndexed(ID3D11DeviceContext* pContext, UINT IndexCount, UINT
 }
 
 DWORD WINAPI MainThread(LPVOID lpParameter) {
-	while (!GetAsyncKeyState(VK_F8) & 1) {
-		Sleep(1);
-	}
+	//while (!GetAsyncKeyState(VK_F7) & 1) {
+	//	Sleep(1);
+	//}
 	bool WindowFocus = false;
 	while (WindowFocus == false) {
 		DWORD ForegroundWindowProcessID;
@@ -107,26 +128,27 @@ DWORD WINAPI MainThread(LPVOID lpParameter) {
 			Process::Handle = GetCurrentProcess();
 			Process::Hwnd = GetForegroundWindow();
 
-			RECT TempRect;
-			GetWindowRect(Process::Hwnd, &TempRect);
-			Process::WindowWidth = TempRect.right - TempRect.left;
-			Process::WindowHeight = TempRect.bottom - TempRect.top;
+			//RECT TempRect;
+			//GetWindowRect(Process::Hwnd, &TempRect);
+			//Process::WindowWidth = TempRect.right - TempRect.left;
+			//Process::WindowHeight = TempRect.bottom - TempRect.top;
 
-			char TempTitle[MAX_PATH];
-			GetWindowText(Process::Hwnd, TempTitle, sizeof(TempTitle));
-			Process::Title = TempTitle;
+			//char TempTitle[MAX_PATH];
+			//GetWindowText(Process::Hwnd, TempTitle, sizeof(TempTitle));
+			//Process::Title = TempTitle;
 
-			char TempClassName[MAX_PATH];
-			GetClassName(Process::Hwnd, TempClassName, sizeof(TempClassName));
-			Process::ClassName = TempClassName;
+			//char TempClassName[MAX_PATH];
+			//GetClassName(Process::Hwnd, TempClassName, sizeof(TempClassName));
+			//Process::ClassName = TempClassName;
 
-			char TempPath[MAX_PATH];
-			GetModuleFileNameEx(Process::Handle, NULL, TempPath, sizeof(TempPath));
-			Process::Path = TempPath;
+			//char TempPath[MAX_PATH];
+			//GetModuleFileNameEx(Process::Handle, NULL, TempPath, sizeof(TempPath));
+			//Process::Path = TempPath;
 
 			WindowFocus = true;
 		}
 	}
+
 	bool InitHook = false;
 	while (InitHook == false) {
 		if (DirectX11::Init() == true) {

@@ -69,6 +69,7 @@
     <ClInclude Include="DirectX11ImGui.h" />
     <ClInclude Include="..\Directories\Menu\Menu.h" />
     <ClInclude Include="..\Directories\Menu\TextEditor.h" />
+    <ClInclude Include="..\Directories\Menu\imfilebrowser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Directories\MinHook\Src\buffer.c">

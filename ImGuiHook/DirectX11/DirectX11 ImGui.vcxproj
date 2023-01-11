@@ -128,7 +128,7 @@
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(SolutionDir)\ImGuiHook\Directories\Microsoft DirectX SDK\Lib\x64;$(LibraryPath)</LibraryPath>
     <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)\ImGuiHook\Directories\Microsoft DirectX SDK\Include;$(SolutionDir)\ImGuiHook\Directories\MinHook\Include;$(IncludePath)</IncludePath>
-    <TargetName>$(ProjectName) (x64)</TargetName>
+    <TargetName>Anno1800ModMenuDX11</TargetName>
     <OutDir>$(SolutionDir)Build\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
