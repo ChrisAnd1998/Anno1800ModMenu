@@ -49,9 +49,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\x64\Debug\</OutDir>
+    <OutDir>$(SolutionDir)Build\</OutDir>
     <IntDir>obj\Debug\</IntDir>
-    <TargetName>dinput8</TargetName>
+    <TargetName>d3d11</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

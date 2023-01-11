@@ -46,10 +46,36 @@ void LoadOriginalLibrary()
 
 }
 
-void LoadPlugins()
+DWORD WINAPI LoadPlugins(LPVOID lpParameter)
 {
+    while (GetModuleHandle("d3d9.dll") == NULL) {
+        Sleep(1000);
+    }
+    while (GetModuleHandle("d3d11.dll") == NULL) {
+        Sleep(1000);
+    }
+    while (GetModuleHandle("d3d12.dll") == NULL) {
+        Sleep(1000);
+    }
+
+    //Sleep(10000);
+
+    while (!GetAsyncKeyState(VK_F7) & 1) {
+    	Sleep(1);
+    }
+
+
+    HANDLE isDirectX12 = GetModuleHandle("d3d11on12.dll");
+
+    //MessageBox(NULL, (LPSTR)isDirectX12, "", MB_OK);
+
+    if (isDirectX12 == NULL) {
         LoadLibrary("Anno1800ModMenuDX11.dll");
+    }
+    else {
         LoadLibrary("Anno1800ModMenuDX12.dll");
+    }
+    return 0;
 }
 
 void LoadEverything()
@@ -61,7 +87,8 @@ void LoadEverything()
 #if !X64
         Direct3D8DisableMaximizedWindowedModeShim();
 #endif
-        LoadPlugins();
+        CreateThread(0, 0, LoadPlugins, 0, 0, 0);
+        
         bLoadedPluginsYet = true;
     }
 }
