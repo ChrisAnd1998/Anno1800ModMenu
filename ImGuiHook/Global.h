@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include <psapi.h>
-#include <MinHook.h>
+#include "..\ImGuiHook\Directories\MinHook\Include\MinHook.h"
 
 #if defined _M_X64
 typedef uint64_t uintx_t;
