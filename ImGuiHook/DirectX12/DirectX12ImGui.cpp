@@ -41,6 +41,8 @@ namespace DirectX12Interface {
 	_FrameContext* FrameContext;
 }
 
+bool resizeWindow;
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT APIENTRY WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	if (ShowMenu) {
@@ -52,6 +54,11 @@ LRESULT APIENTRY WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			return true;
 		}
 	}
+
+	if (uMsg == WM_SIZE) {
+		resizeWindow = true;
+	}
+
 	return CallWindowProc(Process::WndProc, hwnd, uMsg, wParam, lParam);
 }
 
@@ -69,6 +76,7 @@ HRESULT APIENTRY MJPresent(IDXGISwapChain3* pSwapChain, UINT SyncInterval, UINT 
 			Desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 			Desc.OutputWindow = Process::Hwnd;
 			Desc.Windowed = ((GetWindowLongPtr(Process::Hwnd, GWL_STYLE) & WS_POPUP) != 0) ? false : true;
+
 
 			DirectX12Interface::BuffersCounts = Desc.BufferCount;
 			DirectX12Interface::FrameContext = new DirectX12Interface::_FrameContext[DirectX12Interface::BuffersCounts];
@@ -123,11 +131,16 @@ HRESULT APIENTRY MJPresent(IDXGISwapChain3* pSwapChain, UINT SyncInterval, UINT 
 		ImGui_Initialised = true;
 	}
 
+	if (resizeWindow) {
+		//TODO: Release buffer Init etc...
+		resizeWindow = false;
+	}
+
 	if (DirectX12Interface::CommandQueue == nullptr)
 		return oPresent(pSwapChain, SyncInterval, Flags);
 
 
-	if (GetAsyncKeyState(VK_F8) & 1) ShowMenu = !ShowMenu;
+	if (GetAsyncKeyState(VK_F7) & 1) ShowMenu = !ShowMenu;
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
@@ -180,9 +193,9 @@ void APIENTRY MJDrawIndexedInstanced(ID3D12GraphicsCommandList* dCommandList, UI
 }
 
 DWORD WINAPI MainThread(LPVOID lpParameter) {
-	while (!GetAsyncKeyState(VK_F8) & 1) {
-		Sleep(1);
-	}
+	//while (!GetAsyncKeyState(VK_F7) & 1) {
+	//	Sleep(1);
+	//}
 	bool WindowFocus = false;
 	while (WindowFocus == false) {
 		DWORD ForegroundWindowProcessID;
@@ -193,6 +206,7 @@ DWORD WINAPI MainThread(LPVOID lpParameter) {
 			Process::Handle = GetCurrentProcess();
 			Process::Hwnd = GetForegroundWindow();
 
+			
 			RECT TempRect;
 			GetWindowRect(Process::Hwnd, &TempRect);
 			Process::WindowWidth = TempRect.right - TempRect.left;
