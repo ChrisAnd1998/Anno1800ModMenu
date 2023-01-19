@@ -1,5 +1,5 @@
 # Anno1800ModMenu
-A mod menu for Anno 1800 based on Dear ImGui. You can show/hide the menu with F8.
+A mod menu for Anno 1800 based on Dear ImGui. You can show/hide the menu with F7.
 
 
 ![Screenshot 2023-01-06 162818](https://user-images.githubusercontent.com/50437199/211046155-be8269ec-820a-418a-8d0b-5cf994484c90.png)
@@ -7,10 +7,10 @@ A mod menu for Anno 1800 based on Dear ImGui. You can show/hide the menu with F8
 
 
 # Installation
-Extract Anno1800ModMenu.dll and d3d11.dll to STEAMAPPS\common\Anno 1800\Bin\Win64. Then just run the game.
-To show the menu you can hit F8 when you are at main menu or in game.
+Extract Anno1800ModMenuDX11.dll, Anno1800ModMenuDX12.dll and d3d11.dll to STEAMAPPS\common\Anno 1800\Bin\Win64. Then just run the game.
+To show the menu you can hit F7 when you are at main menu or in game.
 
-![Screenshot 2023-01-05 150207](https://user-images.githubusercontent.com/50437199/210800298-6ffcc5f8-373d-4bd0-bfe4-c7596055cec6.png)
+![Untitled222](https://user-images.githubusercontent.com/50437199/213379614-5620e75b-753e-47b1-bac3-daf2f50794bc.jpg)
 
 The mod menu uses Dear ImGui to render the gui. The cool thing about that is that Dear ImGui has lots of possibilities.
 So I will be trying make it possible to turn on/off and edit mods using this gui. And maybe add other modding tools.
