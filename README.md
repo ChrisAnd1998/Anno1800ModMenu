@@ -1,5 +1,6 @@
 # Anno1800ModMenu
-A mod menu for Anno 1800 based on Dear ImGui. You can show/hide the menu with F7.
+A mod menu for Anno 1800 based on Dear ImGui created by ChrisAND1998.
+You can show/hide the menu with F7.
 
 # Installation
 Extract Anno1800ModMenuDX11.dll, Anno1800ModMenuDX12.dll and d3d11.dll to the folder where the anno exe is located (...\Anno 1800\Bin\Win64).
