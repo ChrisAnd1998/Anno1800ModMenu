@@ -1,5 +1,5 @@
 # Anno1800ModMenu
-A mod menu for Anno 1800 based on Dear ImGui created by ChrisAND1998.
+A mod menu for Anno 1800 based on Dear ImGui created by ChrisAnd1998.
 You can show/hide the menu with F7.
 
 # Installation
