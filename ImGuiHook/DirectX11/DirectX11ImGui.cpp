@@ -115,9 +115,9 @@ void APIENTRY MJDrawIndexed(ID3D11DeviceContext* pContext, UINT IndexCount, UINT
 }
 
 DWORD WINAPI MainThread(LPVOID lpParameter) {
-	//while (!GetAsyncKeyState(VK_F7) & 1) {
-	//	Sleep(1);
-	//}
+	while (!GetAsyncKeyState(VK_F7) & 1) {
+		Sleep(1);
+	}
 	bool WindowFocus = false;
 	while (WindowFocus == false) {
 		DWORD ForegroundWindowProcessID;
